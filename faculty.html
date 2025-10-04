@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Faculty Exam Portal</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f5f7fa;
+      color: #333;
+    }
+
+    header {
+      background: #4CAF50;
+      color: white;
+      padding: 15px;
+      text-align: center;
+    }
+
+    nav {
+      text-align: center;
+      margin: 15px;
+    }
+
+    nav button {
+      margin: 5px;
+      padding: 10px 15px;
+      background: white;
+      color: #4CAF50;
+      border: 1px solid #4CAF50;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    nav button:hover {
+      background: #4CAF50;
+      color: white;
+    }
+
+    main {
+      padding: 20px;
+    }
+
+    .section {
+      display: none;
+    }
+    .section.active {
+      display: block;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+      background: white;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+
+    table th, table td {
+      border: 1px solid #ddd;
+      padding: 10px;
+      text-align: center;
+    }
+
+    table th {
+      background: #4CAF50;
+      color: white;
+    }
+
+    .chat-box {
+      width: 100%;
+      max-width: 600px;
+      margin: 20px auto;
+      background: white;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 15px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+
+    .messages {
+      height: 200px;
+      overflow-y: auto;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      padding: 10px;
+      margin-bottom: 10px;
+      background: #fafafa;
+    }
+
+    .msg {
+      margin: 5px 0;
+      padding: 8px 12px;
+      border-radius: 10px;
+      display: inline-block;
+      max-width: 80%;
+    }
+    .student-msg {
+      background: #e1f5fe;
+      align-self: flex-start;
+    }
+    .faculty-msg {
+      background: #c8e6c9;
+      align-self: flex-end;
+      float: right;
+      clear: both;
+    }
+
+    input[type="text"] {
+      width: 70%;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    button.send-btn {
+      padding: 8px 12px;
+      margin-left: 5px;
+      background: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    footer {
+      text-align: center;
+      padding: 10px;
+      background: #333;
+      color: white;
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Faculty Exam Portal</h1>
+  </header>
+
+  <nav>
+    <button onclick="showSection('facultyList')">Faculty List</button>
+    <button onclick="showSection('interaction')">Student-Faculty Interaction</button>
+  </nav>
+
+  <main>
+    <!-- Faculty List -->
+    <section id="facultyList" class="section active">
+      <h2>Faculty Members</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Faculty Name</th>
+            <th>Subject</th>
+            <th>Email</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Mr. Sharma</td>
+            <td>Mathematics</td>
+            <td>sharma@college.edu</td>
+          </tr>
+          <tr>
+            <td>Ms. Gupta</td>
+            <td>English</td>
+            <td>gupta@college.edu</td>
+          </tr>
+          <tr>
+            <td>Dr. Verma</td>
+            <td>Physics</td>
+            <td>verma@college.edu</td>
+          </tr>
+          <tr>
+            <td>Mr. Khan</td>
+            <td>Computer Science</td>
+            <td>khan@college.edu</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- Interaction -->
+    <section id="interaction" class="section">
+      <h2>Student-Faculty Interaction</h2>
+      <div class="chat-box">
+        <div class="messages" id="messages"></div>
+        <input type="text" id="messageInput" placeholder="Type your message...">
+        <button class="send-btn" onclick="sendMessage('student')">Send (Student)</button>
+        <button class="send-btn" style="background:#2196F3;" onclick="sendMessage('faculty')">Reply (Faculty)</button>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>© 2025 Faculty Exam Portal | All Rights Reserved</p>
+  </footer>
+
+  <script>
+    function showSection(id) {
+      let sections = document.querySelectorAll('.section');
+      sections.forEach(sec => sec.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+    }
+
+    function sendMessage(sender) {
+      let input = document.getElementById("messageInput");
+      let msgText = input.value.trim();
+      if(msgText === "") return;
+
+      let msgDiv = document.createElement("div");
+      msgDiv.classList.add("msg");
+      msgDiv.classList.add(sender === "student" ? "student-msg" : "faculty-msg");
+      msgDiv.innerText = msgText;
+
+      document.getElementById("messages").appendChild(msgDiv);
+      input.value = "";
+      document.getElementById("messages").scrollTop = document.getElementById("messages").scrollHeight;
+    }
+  </script>
+</body>
+</html>

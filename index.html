@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Campus Helper</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <header>
+    <h1>Campus Gpt</h1>
+    <nav>
+      <ul>
+        <li><a href="timetable.html">Timetable</a></li>
+        <li><a href="exam.html">Exams</a></li>
+        <li><a href="faculty.html">Faculty</a></li>
+        <li><a href="#doubts">Doubt Solving</a></li>
+        <li><a href="#navigation">Campus Map</a></li>
+        <li><a href="events.html">Events</a></li>
+        <li><a href="#chatbot">Chatbot 🤖</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <!-- Existing sections here -->
+
+    <!-- ✅ Chatbot Section -->
+    <section id="chatbot" class="card">
+      <h2>Student Chatbot 🤖</h2>
+      <div id="chatbox"></div>
+      <input type="text" id="userInput" placeholder="Ask me anything...">
+      <button onclick="sendMessage()">Send</button>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Student Campus Helper</p>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@google/generative-ai/dist/index.umd.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
