@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Campus GPT Chat</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+
+<style>
+body{
+  background:
+    radial-gradient(circle at 85% 85%, rgba(255,183,0,.45), transparent 40%),
+    radial-gradient(circle at 20% 20%, rgba(77,163,255,.25), transparent 40%),
+    linear-gradient(135deg,#050816,#0b1f3a,#1e3c72);
+  background-attachment: fixed;
+}
+.glass{
+  background: rgba(255,255,255,0.15);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border:1px solid rgba(255,255,255,0.25);
+}
+.chat-scroll::-webkit-scrollbar{display:none;}
+.chat-scroll{scrollbar-width:none;-ms-overflow-style:none;}
+</style>
+</head>
+
+<body class="text-white h-screen flex flex-col">
+
+<!-- HEADER -->
+<header class="glass px-4 py-4 flex items-center justify-between shadow-lg">
+  <div class="flex items-center gap-3">
+    <a href="index.html" class="text-white text-xl">
+      <i class="fa-solid fa-arrow-left"></i>
+    </a>
+    <div>
+      <h1 class="font-semibold text-lg">Campus GPT</h1>
+      <p class="text-xs text-white/70">AI Doubt Solver</p>
+    </div>
+  </div>
+
+  <div class="w-9 h-9 rounded-full bg-white/20 flex items-center justify-center">
+    <i class="fa-solid fa-robot"></i>
+  </div>
+</header>
+
+<!-- CHAT AREA -->
+<main id="chatBox" class="flex-1 overflow-y-auto chat-scroll px-4 py-5 space-y-4">
+</main>
+
+<!-- typing -->
+<div id="typing" class="hidden px-4 pb-2 text-sm text-white/70">
+  Campus GPT is typing...
+</div>
+
+<!-- INPUT BAR -->
+<footer class="glass p-3">
+  <div class="flex gap-2 items-center">
+
+    <label class="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center cursor-pointer border border-white/30">
+      <i class="fa-solid fa-paperclip"></i>
+      <input id="imageInput" type="file" accept="image/*" class="hidden">
+    </label>
+
+    <input
+      id="userInput"
+      type="text"
+      placeholder="Ask your doubt..."
+      class="flex-1 px-4 py-3 rounded-full bg-white/20 border border-white/30 text-white placeholder-white/70 outline-none"
+    >
+
+    <button
+      onclick="sendMessage()"
+      class="w-12 h-12 rounded-full bg-blue-600 hover:bg-blue-700 flex items-center justify-center shadow-lg"
+    >
+      <i class="fa-solid fa-paper-plane"></i>
+    </button>
+
+  </div>
+</footer>
+
+<!-- ✅ Gemini SDK -->
+<script type="module">
+import { GoogleGenAI } from "https://esm.run/@google/genai";
+
+const ai = new GoogleGenAI({
+  apiKey: "AIzaSyAneQHuWGd1a5zkUvH9qcJoMdwX4eJNyZY"
+});
+
+const chatBox = document.getElementById("chatBox");
+const input = document.getElementById("userInput");
+const typing = document.getElementById("typing");
+const imageInput = document.getElementById("imageInput");
+
+let selectedImage = null;
+
+/* enter to send */
+input.addEventListener("keypress", e=>{
+  if(e.key==="Enter") sendMessage();
+});
+
+/* image selected */
+imageInput.addEventListener("change", function(){
+  const file = this.files[0];
+  if(!file) return;
+
+  const reader = new FileReader();
+  reader.onload = function(e){
+    selectedImage = e.target.result;
+
+    const preview = document.createElement("div");
+    preview.className = "flex justify-end";
+    preview.innerHTML = `
+      <img src="${selectedImage}" class="max-w-[180px] rounded-xl border border-white/30">
+    `;
+    chatBox.appendChild(preview);
+    chatBox.scrollTop = chatBox.scrollHeight;
+  };
+  reader.readAsDataURL(file);
+});
+
+/* ✅ send message with IMAGE SUPPORT */
+async function sendMessage(){
+  const text = input.value.trim();
+  if(!text && !selectedImage) return;
+
+  // user bubble
+  if(text){
+    const userMsg = document.createElement("div");
+    userMsg.className = "flex justify-end";
+    userMsg.innerHTML = `
+      <div class="bg-white/90 text-slate-900 px-4 py-2 rounded-2xl rounded-tr-sm max-w-[75%]">
+        ${text}
+      </div>
+    `;
+    chatBox.appendChild(userMsg);
+  }
+
+  input.value = "";
+  typing.classList.remove("hidden");
+  chatBox.scrollTop = chatBox.scrollHeight;
+
+  try{
+
+    // 🔥 build multimodal parts
+    const parts = [];
+
+    if(text){
+      parts.push({ text: text });
+    }
+
+    if(selectedImage){
+      const base64Data = selectedImage.split(",")[1];
+
+      parts.push({
+        inlineData: {
+          mimeType: "image/png",
+          data: base64Data
+        }
+      });
+    }
+
+    const response = await ai.models.generateContent({
+      model: "gemini-3-flash-preview",
+      contents: [
+        {
+          role: "user",
+          parts: parts
+        }
+      ],
+      config:{
+        systemInstruction: `You are a helpful assistant for students who have a problem on a basic of study. If the user ask you question you have to answer it in simple way. If the user ask you to solve a problem you have to solve by step by step. If the user ask you to write a code you have to write a code in simple way. If the user ask you to write an essay you have to write an essay in simple way. But if the user ask you to do something that is not related to study you have to say that I am sorry I can't do that.`
+      }
+    });
+
+    typing.classList.add("hidden");
+
+    const botMsg = document.createElement("div");
+    botMsg.className = "flex items-start gap-2";
+    botMsg.innerHTML = `
+      <div class="bg-blue-600/80 px-4 py-2 rounded-2xl rounded-tl-sm max-w-[75%] whitespace-pre-wrap">
+        ${response.text}
+      </div>
+    `;
+    chatBox.appendChild(botMsg);
+
+  }catch(err){
+    typing.classList.add("hidden");
+
+    const botMsg = document.createElement("div");
+    botMsg.className = "flex items-start gap-2";
+    botMsg.innerHTML = `
+      <div class="bg-red-600/80 px-4 py-2 rounded-2xl rounded-tl-sm max-w-[75%]">
+        ❌ Error: ${err.message}
+      </div>
+    `;
+    chatBox.appendChild(botMsg);
+  }
+
+  chatBox.scrollTop = chatBox.scrollHeight;
+  selectedImage = null;
+}
+</script>
+
+</body>
+</html>

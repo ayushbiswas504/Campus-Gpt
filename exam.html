@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Student Exam Portal</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  color: white;
+  min-height: 100vh;
+
+  /* BLUE + YELLOW MIXED BACKGROUND */
+  background:
+    radial-gradient(circle at 85% 85%, #eab308, transparent 40%),
+    radial-gradient(circle at 20% 20%, rgba(77, 163, 255, 0.25), transparent 40%),
+    linear-gradient(135deg, #0b1f3a, #1e3c72, #2a5298);
+}
+
+/* Header */
+header {
+  padding: 20px;
+  font-size: 26px;
+  font-weight: bold;
+  text-align: center;
+  background: linear-gradient(90deg, #1e3c72, #2a5298);
+  box-shadow: 0 6px 25px rgba(0,0,0,0.5);
+}
+
+/* Navigation */
+nav {
+  text-align: center;
+  margin: 25px 0;
+}
+
+/* Buttons */
+nav button {
+  background: rgba(255,255,255,0.12);
+  border: none;
+  padding: 12px 26px;
+  margin: 8px;
+  border-radius: 30px;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.25s ease;
+  backdrop-filter: blur(10px);
+}
+
+nav button:hover {
+  background: linear-gradient(135deg, #4da3ff, #ca8a04);
+  transform: translateY(-2px) scale(1.05);
+}
+
+/* Main Container */
+main {
+  padding: 20px 40px;
+}
+
+.section {
+  display: none;
+}
+
+.section.active {
+  display: block;
+}
+
+/* Glass cards */
+.card {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border-radius: 20px;
+  padding: 25px;
+  box-shadow:
+    0 10px 40px rgba(0,0,0,0.45),
+    inset 0 0 0 1px rgba(255,255,255,0.08);
+  margin-bottom: 30px;
+}
+
+/* Table Styling */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  border-radius: 15px;
+  overflow: hidden;
+}
+
+th {
+  background: rgba(77,163,255,0.8);
+  padding: 15px;
+  font-size: 16px;
+}
+
+td {
+  padding: 14px;
+  text-align: center;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+tr:hover {
+  background: rgba(255,255,255,0.08);
+}
+
+/* Summary Box */
+.marks-summary {
+  margin-top: 20px;
+  padding: 20px;
+  border-radius: 15px;
+  background: rgba(255,255,255,0.1);
+  box-shadow: 0 5px 20px rgba(0,0,0,0.4);
+}
+
+/* Footer */
+footer {
+  text-align: center;
+  padding: 15px;
+  background: rgba(0,0,0,0.4);
+  position: fixed;
+  width: 100%;
+  bottom: 0;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  🎓 Student Exam Portal
+</header>
+
+<nav>
+  <button onclick="showSection('timetable')">📅 Exam Timetable</button>
+  <button onclick="showSection('marks')">📊 Previous Marks</button>
+</nav>
+
+<main>
+
+<!-- Exam Timetable -->
+<section id="timetable" class="section active">
+  <div class="card">
+    <h2>Exam Timetable</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Day</th>
+          <th>Subject</th>
+          <th>Time</th>
+          <th>Room</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>10 March</td>
+          <td>Friday</td>
+          <td>Mathematics</td>
+          <td>9:00 - 12:00</td>
+          <td>Room 101</td>
+        </tr>
+        <tr>
+          <td>12 March</td>
+          <td>Sunday</td>
+          <td>Physics</td>
+          <td>9:00 - 12:00</td>
+          <td>Room 102</td>
+        </tr>
+        <tr>
+          <td>14 March</td>
+          <td>Tuesday</td>
+          <td>Chemistry</td>
+          <td>9:00 - 12:00</td>
+          <td>Room 103</td>
+        </tr>
+        <tr>
+          <td>16 March</td>
+          <td>Thursday</td>
+          <td>English</td>
+          <td>9:00 - 12:00</td>
+          <td>Room 104</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- Previous Marks -->
+<section id="marks" class="section">
+  <div class="card">
+    <h2>Previous Marks</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Subject</th>
+          <th>Max Marks</th>
+          <th>Marks Obtained</th>
+          <th>Grade</th>
+        </tr>
+      </thead>
+      <tbody id="marksTable">
+        <tr>
+          <td>Mathematics</td>
+          <td>100</td>
+          <td>85</td>
+          <td>A</td>
+        </tr>
+        <tr>
+          <td>Physics</td>
+          <td>100</td>
+          <td>78</td>
+          <td>B+</td>
+        </tr>
+        <tr>
+          <td>Chemistry</td>
+          <td>100</td>
+          <td>90</td>
+          <td>A+</td>
+        </tr>
+        <tr>
+          <td>English</td>
+          <td>100</td>
+          <td>88</td>
+          <td>A</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="marks-summary" id="summary"></div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  @ Student Exam Portal
+</footer>
+
+<script>
+function showSection(id) {
+  let sections = document.querySelectorAll('.section');
+  sections.forEach(sec => sec.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+
+function calculateSummary() {
+  let rows = document.querySelectorAll("#marksTable tr");
+  let total = 0, obtained = 0;
+
+  rows.forEach(row => {
+    total += parseInt(row.cells[1].innerText);
+    obtained += parseInt(row.cells[2].innerText);
+  });
+
+  let percentage = ((obtained / total) * 100).toFixed(2);
+
+  document.getElementById("summary").innerHTML = `
+    <h3>Performance Summary</h3>
+    <p>Total Marks: <b>${obtained}/${total}</b></p>
+    <p>Percentage: <b>${percentage}%</b></p>
+    <p>Status: <b style="color:${percentage >= 50 ? '#4CAF50' : '#ff5252'}">
+      ${percentage >= 50 ? 'Pass ✅' : 'Fail ❌'}
+    </b></p>
+  `;
+}
+
+window.onload = calculateSummary;
+</script>
+
+</body>
+</html>

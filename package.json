@@ -1,0 +1,25 @@
+{
+  "name": "ayush",
+  "version": "1.0.0",
+  "description": "chatbot package",
+  "main": "script.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "ayush",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ayushbiswas504/Campus_Gpt_2.0.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ayushbiswas504/Campus_Gpt_2.0/issues"
+  },
+  "homepage": "https://github.com/ayushbiswas504/Campus_Gpt_2.0#readme",
+  "dependencies": {
+    "@google/genai": "^1.42.0"
+  },
+  "devDependencies": {}
+}

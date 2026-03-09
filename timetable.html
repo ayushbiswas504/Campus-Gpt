@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Student Weekly Schedule</title>
+<!-- Tailwind CSS v3 with Plugins -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Google Fonts: Inter -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<!-- Phosphor Icons (for generic icons) -->
+<script src="https://unpkg.com/@phosphor-icons/web"></script>
+<!-- Custom Configuration and Styles -->
+<script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+          },
+          colors: {
+            'glass-border': 'rgba(255, 255, 255, 0.2)',
+            'glass-bg': 'rgba(255, 255, 255, 0.15)',
+            'highlight-blue': '#3B82F6',
+            'highlight-yellow': '#FDE047',
+          }
+        }
+      }
+    }
+  </script>
+<style data-purpose="glassmorphism-utilities">
+    /* Base background gradient */
+    body {
+      background: linear-gradient(160deg, #0c4a6e 0%, #1e3a8a 40%, #ca8a04 100%);
+      background-attachment: fixed; /* Ensures gradient covers scroll area */
+      color: white;
+      min-height: 100vh;
+    }
+
+    /* Glass effect class */
+    .glass {
+      background: rgba(255, 255, 255, 0.12);
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    }
+    
+    /* Stronger glass for active elements */
+    .glass-strong {
+      background: rgba(255, 255, 255, 0.25);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+    
+    /* Timeline connector line */
+    .timeline-line {
+      position: absolute;
+      left: 3.5rem;
+      top: 2rem;
+      bottom: 2rem;
+      width: 2px;
+      background: rgba(255, 255, 255, 0.3);
+      z-index: 0;
+    }
+
+    /* Left accent glow for cards */
+    .accent-blue {
+      box-shadow: inset 4px 0 0 0 #3b82f6, 0 4px 10px rgba(0, 0, 0, 0.15);
+    }
+    .accent-yellow {
+      box-shadow: inset 4px 0 0 0 #eab308, 0 4px 10px rgba(0, 0, 0, 0.15);
+    }
+    .accent-mixed {
+      box-shadow: inset 4px 0 0 0 #7dd3fc, 0 4px 10px rgba(0, 0, 0, 0.15);
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="font-sans antialiased pb-24 relative">
+<!-- BEGIN: MainHeader -->
+<header class="pt-8 px-6 pb-4 flex justify-between items-start">
+<div class="flex flex-col">
+<h1 class="text-lg font-medium text-gray-100 opacity-90">Student Weekly Schedule</h1>
+</div>
+<!-- User Profile Icon Placeholder -->
+<div class="w-12 h-12 rounded-full glass flex items-center justify-center shrink-0 bg-white/10">
+<i class="ph-fill ph-user text-xl text-white"></i>
+</div>
+</header>
+<!-- END: MainHeader -->
+<!-- BEGIN: DateSelector -->
+<section class="px-4 mb-5">
+<div class="glass rounded-3xl p-4 w-full overflow-x-auto">
+<div class="flex justify-between items-center min-w-max gap-4 sm:gap-0 sm:justify-between w-full">
+<!-- Day Item -->
+<div class="flex flex-col items-center gap-1 text-gray-300">
+<span class="text-xs font-medium">Mon</span>
+<span class="text-lg font-semibold">11</span>
+</div>
+<!-- Day Item -->
+<div class="flex flex-col items-center gap-1 text-gray-300">
+<span class="text-xs font-medium">Tue</span>
+<span class="text-lg font-semibold">12</span>
+</div>
+<!-- Active Day Item (Wednesday 13) -->
+<div class="flex flex-col items-center gap-1 relative z-10">
+<span class="text-xs font-semibold text-white">Wed</span>
+<div class="w-10 h-10 rounded-full bg-blue-600 border-2 border-[#facc15] flex items-center justify-center shadow-lg shadow-blue-900/50">
+<span class="text-[1.2rem] font-bold text-white">13</span>
+</div>
+<!-- Selection Glow behind active item -->
+<div class="absolute inset-0 bg-blue-500 blur-xl opacity-30 -z-10 rounded-full"></div>
+</div>
+<!-- Day Item -->
+<div class="flex flex-col items-center gap-1 text-gray-300">
+<span class="text-xs font-medium">Thu</span>
+<span class="text-lg font-semibold">14</span>
+</div>
+<!-- Day Item -->
+<div class="flex flex-col items-center gap-1 text-gray-300">
+<span class="text-xs font-medium">Fri</span>
+<span class="text-lg font-semibold">15</span>
+</div>
+<!-- Day Item -->
+<div class="flex flex-col items-center gap-1 text-gray-300">
+<span class="text-xs font-medium">Sat</span>
+<span class="text-lg font-semibold">16</span>
+</div>
+<!-- Day Item -->
+<div class="flex flex-col items-center gap-1 text-gray-300">
+<span class="text-xs font-medium">Sun</span>
+<span class="text-lg font-semibold">17</span>
+</div>
+</div>
+</div>
+</section>
+<!-- END: DateSelector -->
+<!-- BEGIN: TimelineSchedule -->
+<main class="px-4 relative">
+<!-- Vertical decorative line connecting time slots -->
+<div class="timeline-line"></div>
+<div class="flex flex-col gap-6">
+<!-- Schedule Item 1 -->
+<article class="flex w-full relative z-10">
+<!-- Time Column -->
+<div class="w-20 pt-4 flex flex-col items-start shrink-0 text-right pr-3">
+<span class="text-lg font-bold text-white leading-none">09:00</span>
+<span class="text-xs text-gray-300 font-medium">AM</span>
+</div>
+<!-- Card -->
+<div class="flex-1 glass rounded-2xl p-4 flex items-center gap-4 accent-blue shadow-lg">
+<!-- Icon Circle -->
+<div class="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center shrink-0">
+<i class="ph-fill ph-clock text-blue-600 text-2xl"></i>
+</div>
+<!-- Content -->
+<div>
+<h3 class="font-bold text-white text-sm sm:text-base mb-1">CS101 - Intro to Computer Science</h3>
+<p class="text-[0.85rem] text-gray-100 opacity-90 font-medium">Room 301, Engineering Block</p>
+</div>
+</div>
+</article>
+<!-- Schedule Item 2 -->
+<article class="flex w-full relative z-10">
+<!-- Time Column -->
+<div class="w-20 pt-4 flex flex-col items-start shrink-0 text-right pr-3">
+<span class="text-lg font-bold text-white leading-none">11:00</span>
+<span class="text-xs text-gray-300 font-medium">AM</span>
+</div>
+<!-- Card -->
+<div class="flex-1 glass rounded-2xl p-4 flex items-center gap-4 accent-yellow shadow-lg">
+<!-- Icon Circle -->
+<div class="w-12 h-12 rounded-full bg-yellow-100 flex items-center justify-center shrink-0">
+<i class="ph-fill ph-clock text-[#ca8a04] text-2xl"></i>
+</div>
+<!-- Content -->
+<div>
+<h3 class="font-bold text-white text-sm sm:text-base mb-1">MATH102 - Calculus I</h3>
+<p class="text-[0.85rem] text-gray-100 opacity-90 font-medium">Room 205, Science Building</p>
+</div>
+</div>
+</article>
+<!-- Schedule Item 3 -->
+<article class="flex w-full relative z-10">
+<!-- Time Column -->
+<div class="w-20 pt-4 flex flex-col items-start shrink-0 text-right pr-3">
+<span class="text-lg font-bold text-white leading-none">13:00</span>
+<span class="text-xs text-gray-300 font-medium">PM</span>
+</div>
+<!-- Card -->
+<div class="flex-1 glass rounded-2xl p-4 flex items-center gap-4 accent-mixed shadow-lg">
+<!-- Icon Circle (Mixed Gradient) -->
+<div class="w-12 h-12 rounded-full flex items-center justify-center shrink-0" style="background: linear-gradient(to right, #3b82f6 50%, #eab308 50%);">
+<i class="ph-fill ph-hamburger text-white text-xl"></i>
+</div>
+<!-- Content -->
+<div>
+<h3 class="font-bold text-white text-sm sm:text-base mb-1">Lunch Break</h3>
+<p class="text-[0.85rem] text-gray-100 opacity-90 font-medium">Campus Cafeteria</p>
+</div>
+</div>
+</article>
+<!-- Schedule Item 4 -->
+<article class="flex w-full relative z-10">
+<!-- Time Column -->
+<div class="w-20 pt-4 flex flex-col items-start shrink-0 text-right pr-3">
+<span class="text-lg font-bold text-white leading-none">15:00</span>
+<span class="text-xs text-gray-300 font-medium">PM</span>
+</div>
+<!-- Card -->
+<div class="flex-1 glass rounded-2xl p-4 flex items-center gap-4 accent-blue shadow-lg">
+<!-- Icon Circle -->
+<div class="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center shrink-0">
+<i class="ph-fill ph-clock text-blue-600 text-2xl"></i>
+</div>
+<!-- Content -->
+<div>
+<h3 class="font-bold text-white text-sm sm:text-base mb-1">PHYS101 - Physics Lab</h3>
+<p class="text-[0.85rem] text-gray-100 opacity-90 font-medium">Lab 101, Science Building</p>
+</div>
+</div>
+</article>
+</div>
+</main>
+<!-- END: TimelineSchedule -->
+<!-- BEGIN: BottomNavigation -->
+<nav class="fixed bottom-0 left-0 right-0 p-4 z-50">
+<div class="glass-strong rounded-3xl h-16 flex items-center justify-around shadow-2xl backdrop-blur-xl">
+<!-- Nav Item: Home -->
+<a href="index.html">
+  <div class="flex flex-col items-center justify-center w-12 h-full text-gray-400 hover:text-white transition-colors cursor-pointer">
+    <i class="ph-fill ph-house text-2xl mb-0.5"></i>
+    <span class="text-[10px] font-medium">Home</span>
+  </div>
+</a>
+<!-- Nav Item: Schedule (Active) -->
+<a href="timetable.html">
+  <div class="flex flex-col items-center justify-center h-full">
+    <div class="px-5 py-2 bg-blue-600 rounded-full flex items-center justify-center shadow-lg shadow-blue-600/40">
+      <i class="ph-fill ph-calendar text-xl text-white"></i>
+      <span class="ml-2 text-xs font-bold text-white">Schedule</span>
+    </div>
+  </div>
+</a>
+<!-- Nav Item: Map -->
+<a href="map.html" class="flex flex-col items-center justify-center w-12 h-full text-gray-400 hover:text-white transition-colors cursor-pointer">
+  <i class="ph-fill ph-map-pin text-2xl mb-0.5"></i>
+  <span class="text-[10px] font-medium">Map</span>
+</a>
+<!-- Nav Item: Events -->
+<a href="events.html" class="flex flex-col items-center justify-center w-12 h-full text-gray-400 hover:text-white transition-colors cursor-pointer">
+  <i class="ph-fill ph-calendar-check text-2xl mb-0.5"></i>
+  <span class="text-[10px] font-medium">Events</span>
+</a>
+<!-- Nav Item: Chatbot -->
+<a href="doubt.html" class="flex flex-col items-center justify-center w-12 h-full text-gray-400 hover:text-white transition-colors cursor-pointer">
+  <i class="ph-fill ph-robot text-2xl mb-0.5"></i>
+  <span class="text-[10px] font-medium">Chatbot</span>
+</a>
+</div>
+</nav>
+<!-- END: BottomNavigation -->
+</body></html>

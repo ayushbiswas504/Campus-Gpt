@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+    <link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#2563eb">
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Campus GPT - Dashboard</title>
+<!-- Load Tailwind CSS v3 -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Configure Tailwind for custom colors and fonts if needed -->
+<script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'glass-border': 'rgba(255, 255, 255, 0.3)',
+                        'glass-bg': 'rgba(255, 255, 255, 0.2)',
+                        'glass-bg-dark': 'rgba(20, 20, 30, 0.4)',
+                    },
+                    boxShadow: {
+                        'glass': '0 4px 30px rgba(0, 0, 0, 0.1)',
+                    }
+                }
+            }
+        }
+    </script>
+<!-- Custom CSS for specific Glassmorphism effects -->
+<style data-purpose="glassmorphism-utilities">
+        body {
+            background-color: #0f4c75;
+            background-image: 
+                radial-gradient(at 0% 100%, #fbbf24 0px, transparent 50%),
+                radial-gradient(at 100% 0%, #fbbf24 0px, transparent 50%),
+                radial-gradient(at 0% 50%, #22d3ee 0px, transparent 50%);
+            background-attachment: fixed;
+            background-size: cover;
+            min-height: 100vh;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 20px;
+            color: #1e293b;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .glass-nav {
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-top: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        /* Page fade animation */
+.page-transition {
+  animation: pageFade 0.35s ease;
+}
+
+@keyframes pageFade {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+    </style>
+<!-- FontAwesome for Icons -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="text-white pb-24">
+    <!-- 🔥 Loader -->
+<div id="appLoader" class="fixed inset-0 bg-[#050816] flex items-center justify-center z-[9999]">
+  <div class="text-center">
+    <div class="w-14 h-14 border-4 border-blue-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+    <p class="text-white text-sm tracking-wide">Loading Campus GPT...</p>
+  </div>
+</div>
+<!-- BEGIN: MainHeader -->
+<header class="pt-12 pb-4 px-6 flex justify-between items-center w-full fixed top-0 z-50 bg-gradient-to-b from-black/30 to-transparent">
+<h1 class="text-2xl font-bold tracking-wide text-white drop-shadow-md">Dashboard</h1>
+<div aria-label="User Profile" class="w-10 h-10 rounded-full bg-white/20 backdrop-blur-md border border-white/30 flex items-center justify-center overflow-hidden cursor-pointer">
+<i class="fa-solid fa-user text-white"></i>
+</div>
+</header>
+<!-- END: MainHeader -->
+<!-- BEGIN: MainContent -->
+<!-- Added top padding to account for fixed header -->
+<main class="pt-24 px-5 space-y-6 page-transition">
+<!-- BEGIN: QuickActionsSection -->
+<section data-purpose="quick-actions">
+<h2 class="text-lg font-semibold text-white mb-4 pl-1 text-shadow-sm">Quick Actions</h2>
+<div class="grid grid-cols-2 gap-4">
+<!-- Doubt -->
+<a href="doubt.html">
+<article class="glass-panel p-5 flex flex-col items-center justify-center text-center h-40 hover:bg-white/40 transition cursor-pointer">
+  <div class="bg-blue-100/50 rounded-full p-4 mb-2">
+    <i class="fa-solid fa-brain text-4xl text-blue-600"></i>
+  </div>
+  <h3 class="font-bold text-slate-800 text-sm">Doubt Solving</h3>
+  <p class="text-xs text-slate-600 mt-1">Upload PDF/Ask Q</p>
+</article>
+</a>
+<!-- Timetable -->
+<a href="timetable.html">
+<article class="glass-panel p-5 flex flex-col items-center justify-center text-center h-40 hover:bg-white/40 transition cursor-pointer">
+  <div class="bg-blue-100/50 rounded-full p-4 mb-2">
+    <i class="fa-regular fa-calendar text-4xl text-blue-600"></i>
+  </div>
+  <h3 class="font-bold text-slate-800 text-sm">Timetable</h3>
+  <p class="text-xs text-slate-600 mt-1">Next: CS101 in 15m</p>
+</article>
+</a>
+<!-- Card 3 -->
+<!-- Exams -->
+<a href="exam.html">
+<article class="glass-panel p-5 flex flex-col items-center justify-center text-center h-40 hover:bg-white/40 transition cursor-pointer">
+  <div class="bg-blue-100/50 rounded-full p-4 mb-2">
+    <i class="fa-solid fa-clock text-4xl text-blue-600"></i>
+  </div>
+  <h3 class="font-bold text-slate-800 text-sm">Exams</h3>
+  <p class="text-xs text-slate-600 mt-1">Next Exam: Nov 15</p>
+</article>
+</a>
+<a href="faculty.html">
+<article class="glass-panel p-5 flex flex-col items-center justify-center text-center h-40 hover:bg-white/40 transition cursor-pointer">
+  <div class="bg-blue-100/50 rounded-full p-4 mb-2">
+    <i class="fa-regular fa-id-card text-4xl text-blue-600"></i>
+  </div>
+  <h3 class="font-bold text-slate-800 text-sm">Faculty</h3>
+  <p class="text-xs text-slate-600 mt-1">Contact professors</p>
+</article>
+</a></div>
+</section>
+<!-- END: QuickActionsSection -->
+<!-- BEGIN: CampusNavigationSection -->
+<section data-purpose="campus-navigation">
+<h2 class="text-lg font-semibold text-white mb-4 pl-1 text-shadow-sm">Campus Navigation</h2>
+<div class="glass-panel p-3">
+<!-- Map Container -->
+<div class="w-full h-48 rounded-xl overflow-hidden bg-gray-200 relative mb-3 border border-white/20 shadow-inner">
+</div>
+<!-- Search and Navigate Controls -->
+<div class="flex gap-2 items-center"><div class="relative flex-grow">
+<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+<i class="fa-solid fa-magnifying-glass text-slate-500"></i>
+</div>
+<input class="block w-full pl-10 pr-3 py-2.5 rounded-full bg-white/50 backdrop-blur-sm border-none text-sm text-slate-800 placeholder-slate-600 focus:ring-2 focus:ring-blue-400" placeholder="Find Location..." type="text"/>
+</div>
+<button class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-full text-sm font-semibold shadow-lg shadow-blue-600/30 transition-colors whitespace-nowrap">
+    Navigate
+</button></div>
+</div>
+</section>
+<!-- END: CampusNavigationSection -->
+<!-- BEGIN: EventRemindersSection -->
+<section data-purpose="event-reminders">
+<h2 class="text-lg font-semibold text-white mb-4 pl-1 text-shadow-sm">Event Reminders</h2>
+
+<div class="flex space-x-4 overflow-x-auto no-scrollbar pb-2">
+
+<!-- Reminder Card 1 -->
+<article class="glass-panel p-4 min-w-[150px] flex flex-col justify-center shrink-0 relative 
+transform transition-all duration-300 hover:-translate-y-2 hover:scale-105 hover:shadow-xl cursor-pointer">
+
+<div class="absolute top-3 right-3 text-slate-400">
+<i class="fa-solid fa-calendar-alt"></i>
+</div>
+
+<div class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center mb-3">
+<i class="fa-solid fa-laptop-code text-blue-600 text-lg"></i>
+</div>
+
+<h3 class="font-bold text-slate-900 text-base">Hackathon</h3>
+<p class="text-lg text-slate-700 font-bold">March 20</p>
+<p class="text-xs text-slate-500 mt-1">Student Center</p>
+
+</article>
+
+<!-- Reminder Card 2 -->
+<article class="glass-panel p-4 min-w-[150px] flex flex-col justify-center shrink-0 relative 
+transform transition-all duration-300 hover:-translate-y-2 hover:scale-105 hover:shadow-xl cursor-pointer">
+
+<div class="absolute top-3 right-3 text-slate-400">
+<i class="fa-solid fa-calendar-alt"></i>
+</div>
+
+<div class="w-10 h-10 rounded-full bg-purple-100 flex items-center justify-center mb-3">
+<i class="fa-solid fa-comments text-purple-600 text-lg"></i>
+</div>
+
+<h3 class="font-bold text-slate-900 text-base">Debate Club</h3>
+<p class="text-lg text-slate-700 font-bold">March 22</p>
+<p class="text-xs text-slate-500 mt-1">Room 304</p>
+
+</article>
+
+<!-- Reminder Card 3 -->
+<article class="glass-panel p-4 min-w-[150px] flex flex-col justify-center shrink-0 relative 
+transform transition-all duration-300 hover:-translate-y-2 hover:scale-105 hover:shadow-xl cursor-pointer">
+
+<div class="absolute top-3 right-3 text-slate-400">
+<i class="fa-solid fa-calendar-alt"></i>
+</div>
+
+<div class="w-10 h-10 rounded-full bg-orange-100 flex items-center justify-center mb-3">
+<i class="fa-solid fa-futbol text-orange-600 text-lg"></i>
+</div>
+
+<h3 class="font-bold text-slate-900 text-base">Soccer Final</h3>
+<p class="text-lg text-slate-700 font-bold">March 25</p>
+<p class="text-xs text-slate-500 mt-1">Main Stadium</p>
+
+</article>
+
+</div>
+</section>
+<!-- END: EventRemindersSection -->
+</main>
+<!-- END: MainContent -->
+<!-- BEGIN: BottomNavigation -->
+<nav class="glass-nav fixed bottom-0 w-full rounded-t-3xl px-2 pb-6 pt-2 z-50">
+<ul class="flex justify-around items-end w-full"><!-- Nav Item: Home -->
+<li class="flex-1">
+<a class="flex flex-col items-center gap-1 p-2 text-slate-700 hover:text-blue-600 transition-colors" href="index.html">
+<i class="fa-solid fa-house text-xl"></i>
+<span class="text-[10px] font-medium">Home</span>
+</a>
+</li>
+<!-- Nav Item: Schedule -->
+<li class="flex-1">
+<a class="flex flex-col items-center gap-1 p-2 text-slate-800 hover:text-blue-600 transition-colors duration-200" href="timetable.html">
+<i class="fa-regular fa-calendar text-xl"></i>
+<span class="text-[10px] font-medium">Schedule</span>
+</a>
+</li>
+
+<!-- Nav Item: Map -->
+<li class="flex-1">
+<a class="flex flex-col items-center gap-1 p-2 text-slate-800 hover:text-blue-600 transition-colors duration-200" href="map.html">
+<i class="fa-solid fa-map-location-dot text-xl"></i>
+<span class="text-[10px] font-medium">Map</span>
+</a>
+</li>
+
+<!-- Nav Item: Events -->
+<li class="flex-1">
+<a class="flex flex-col items-center gap-1 p-2 text-slate-800 hover:text-blue-600 transition-colors duration-200" href="events.html">
+<i class="fa-regular fa-calendar-check text-xl"></i>
+<span class="text-[10px] font-medium">Events</span>
+</a>
+</li>
+<!-- Nav Item: Student Chatbot (Highlighted Tab) -->
+<li class="flex-none">
+<a class="flex flex-col items-center justify-center w-20 h-16 -mt-8 mr-2 rounded-2xl bg-gradient-to-b from-blue-500 to-blue-600 shadow-lg shadow-blue-500/40 border border-white/20 transition-transform hover:scale-105" href="doubt.html">
+<i class="fa-solid fa-robot text-white text-2xl mb-1"></i>
+<span class="text-[10px] font-bold text-white">Chatbot</span>
+</a>
+</li></ul>
+</nav>
+<script>
+window.addEventListener("load", () => {
+  const loader = document.getElementById("appLoader");
+  loader.style.opacity = "0";
+  loader.style.transition = "opacity 0.4s ease";
+  setTimeout(() => loader.remove(), 400);
+});
+</script>
+<script>
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register("sw.js");
+}
+</script>
+<!-- END: BottomNavigation -->
+</body></html><!-- MISSING_IMAGES:
+- Campus Map Image (Used placeholder https://placehold.co/600x400/e2e8f0/475569?text=Campus+Map instead of missing {{DATA:IMAGE:map_placeholder}})
+-->
